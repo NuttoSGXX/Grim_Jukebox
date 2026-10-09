@@ -437,15 +437,16 @@ const UI = {
           ${discHTML()}
           <div class="gjb-armbase"></div>
           <button type="button" class="gjb-arm" data-action="needle" title="${gm ? "Drop / lift the needle — plays or stops for everyone" : "Only the DM can move the needle"}">${ARM_SVG}</button>
-          <div class="gjb-brand">Grim Jukebox</div>
+        </div>
+        <div class="gjb-now"><i class="fa-solid fa-compact-disc"></i><span class="gjb-now-text"></span></div>
+        <div class="gjb-channels"></div>
+        <div class="gjb-foot" data-drag><div class="gjb-brand">Jukebox</div>
           <div class="gjb-knobs">
             <button type="button" data-action="peek" title="Show the YouTube players (skip an ad, check a video)"><i class="fa-brands fa-youtube"></i></button>
             ${gm ? `<button type="button" data-action="panel" title="Playlists"><i class="fa-solid fa-list"></i></button>` : ""}
             <button type="button" data-action="mini" title="Minimise"><i class="fa-solid fa-minus"></i></button>
           </div>
         </div>
-        <div class="gjb-now"><i class="fa-solid fa-compact-disc"></i><span class="gjb-now-text"></span></div>
-        <div class="gjb-channels"></div>
       </div>
       ${gm ? `<div class="gjb-panel"></div>` : ""}`;
     document.body.append(root);
@@ -480,6 +481,9 @@ const UI = {
     const r = this.root;
     if (!r) return;
     r.classList.toggle("is-mini", !!UIS.mini);
+    let size = 50;
+    try { size = num(game.settings.get(MOD, "size"), 50); } catch (_) { /* default */ }
+    r.style.setProperty("--gjb-s", String(clamp(size, 40, 100) / 100));
     r.classList.toggle("panel-open", !!UIS.panel && game.user.isGM);
     const w = r.offsetWidth || 320, h = r.offsetHeight || 380;
     let x = UIS.x ?? 16, y = UIS.y ?? window.innerHeight - h - 90;
@@ -597,7 +601,7 @@ const UI = {
       </section>`;
     }).join("");
     panel.innerHTML = `
-      <div class="gjb-panel-head"><span>Playlists</span><button type="button" data-action="stop-all" title="Stop everything"><i class="fa-solid fa-stop"></i> Stop all</button></div>
+      <div class="gjb-panel-head"><span>Playlists</span><button type="button" data-action="stop-all" title="Stop everything"><i class="fa-solid fa-stop"></i> Stop all</button><button type="button" class="gjb-panel-close" data-action="panel" title="Close the playlist panel (reopen with the list button on the turntable)"><i class="fa-solid fa-xmark"></i></button></div>
       <div class="gjb-pls">${pls || `<div class="gjb-pls-empty">Create a playlist for each layer you want to run at once — for example <b>Music</b> and <b>Ambience</b>.</div>`}</div>
       <button type="button" class="gjb-newpl" data-action="pl-add"><i class="fa-solid fa-plus"></i> New playlist</button>`;
     const box = panel.querySelector(".gjb-pls");
@@ -843,6 +847,13 @@ Hooks.once("init", () => {
     onChange: (v) => { STATE = normState(v); Jukebox.apply(); }
   });
   game.settings.register(MOD, "ui", { scope: "client", config: false, type: Object, default: {} });
+  game.settings.register(MOD, "size", {
+    name: "Turntable size",
+    hint: "How big the turntable is on your own screen.",
+    scope: "client", config: true, type: Number, default: 50,
+    choices: { 50: "Small (50%)", 65: "Medium (65%)", 80: "Large (80%)", 100: "Full (100%)" },
+    onChange: () => UI.place()
+  });
   game.settings.register(MOD, "theme", {
     name: "Colour theme",
     hint: "Set by the DM and applied to every player, like the other Grim modules.",

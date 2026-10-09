@@ -38,6 +38,10 @@ https://github.com/NuttoSGXX/Grim_Jukebox/releases/latest/download/module.json
 - เพลงที่ใช้บ่อยหรือฉากสำคัญ ใช้ไฟล์ในเครื่องแทน
 - ถ้าโฆษณาขึ้น: กดปุ่ม YouTube เพื่อข้าม จากนั้นโมดูลจะดึงเพลงกลับมาตรงจังหวะเดียวกับคนอื่น
 
+## ขนาดและแผงเพลย์ลิส
+- Settings → Grim Jukebox → Turntable size: 50% (ค่าเริ่มต้น), 65%, 80%, 100% — ตั้งแยกของแต่ละคน
+- DM ปิดแผงเพลย์ลิสได้ด้วยปุ่ม × บนหัวแผง และเปิดคืนด้วยปุ่มรายการ (list) ใต้เครื่องเล่น
+
 ## ธีม
 Settings → Grim Jukebox → Colour theme (DM ตั้ง ใช้กับทุกคน): Black & Red, Black-Grey-White, White & Purple, Black & Blue
 

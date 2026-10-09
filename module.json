@@ -2,7 +2,7 @@
   "id": "grim-jukebox",
   "title": "Grim Jukebox",
   "description": "A dark-fantasy turntable for Foundry VTT: stream YouTube links or local audio to every player, with playlists, per-track fades, loops, and layered channels (music + ambience).",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "authors": [{ "name": "NuttoSGXX" }],
   "compatibility": { "minimum": "13", "verified": "14" },
   "esmodules": ["scripts/main.js"],
